@@ -18,6 +18,12 @@ object Prefs {
 
     // com.miui.fliphome
     const val FLIPHOME_NO_START_PAGE   = "fliphome_no_start_page"
+    const val FLIPHOME_RECENTS_STYLE   = "fliphome_recents_style"
+
+    // Recents style values
+    const val RECENTS_STYLE_DEFAULT    = -1  // 跟随系统
+    const val RECENTS_STYLE_HORIZONTAL = 0   // 横向
+    const val RECENTS_STYLE_VERTICAL   = 1   // 纵向
 
     // Per-app hide outer & dpi config
     const val HIDE_OUTER_PREFIX = "hide_outer_"

@@ -19,6 +19,12 @@ abstract class BaseHook {
                 safeHook("[${param.packageName}] ${spec.prefKey}") { setupHooks(spec.prefKey, param) }
             }
         }
+        cfg.prefs.filterIsInstance<PrefSpec.ListSelect>().forEach { spec ->
+            val value = prefs.getInt(spec.prefKey, spec.defaultValue)
+            if (value != spec.defaultValue) {
+                safeHook("[${param.packageName}] ${spec.prefKey}") { setupHooks(spec.prefKey, param) }
+            }
+        }
     }
 
     protected open fun setupHooks(prefKey: String, param: PackageReadyParam) {}

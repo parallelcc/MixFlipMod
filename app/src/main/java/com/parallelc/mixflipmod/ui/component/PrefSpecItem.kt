@@ -207,5 +207,55 @@ fun PrefSpecItem(
                 holdDownState = showDropdown,
             )
         }
+        is PrefSpec.ListSelect -> {
+            val optionCount = spec.entries.size
+            var stored by remember { mutableIntStateOf(prefs.getInt(spec.prefKey, spec.defaultValue)) }
+            var showDropdown by remember { mutableStateOf(false) }
+            val selectedIndex = spec.entryValues.indexOf(stored).coerceAtLeast(0)
+            BasicComponent(
+                title = stringResource(spec.titleRes),
+                summary = spec.summaryRes?.let { stringResource(it) },
+                endActions = {
+                    Box {
+                        OverlayListPopup(
+                            show = showDropdown,
+                            alignment = PopupPositionProvider.Align.End,
+                            onDismissRequest = { showDropdown = false },
+                        ) {
+                            ListPopupColumn {
+                                spec.entries.forEachIndexed { index, entryRes ->
+                                    DropdownImpl(
+                                        text = stringResource(entryRes),
+                                        optionSize = optionCount,
+                                        isSelected = index == selectedIndex,
+                                        index = index,
+                                        onSelectedIndexChange = {
+                                            val newValue = spec.entryValues[index]
+                                            stored = newValue
+                                            prefs.edit { putInt(spec.prefKey, newValue) }
+                                            showDropdown = false
+                                        },
+                                    )
+                                }
+                            }
+                        }
+                        Row(
+                            modifier = Modifier.clickable { showDropdown = true },
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = stringResource(spec.entries[selectedIndex]),
+                                color = if (stored == spec.defaultValue) colorScheme.onSurfaceVariantSummary else colorScheme.primary,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium,
+                            )
+                            Spacer(Modifier.size(8.dp))
+                            DropdownArrowEndAction(actionColor = colorScheme.onSurfaceVariantActions)
+                        }
+                    }
+                },
+                holdDownState = showDropdown,
+            )
+        }
     }
 }

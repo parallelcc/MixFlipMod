@@ -53,6 +53,11 @@
 
     <string name="pref_fliphome_no_start_page">屏蔽特殊应用外屏启动页</string>
     <string name="pref_fliphome_no_start_page_summary">米家、微博、网易云音乐等</string>
+    <string name="pref_fliphome_recents_style">外屏最近任务样式</string>
+    <string name="pref_fliphome_recents_style_summary">切换外屏最近任务的显示布局</string>
+    <string name="recents_style_follow_system">跟随系统</string>
+    <string name="recents_style_horizontal">横向</string>
+    <string name="recents_style_vertical">纵向</string>
 
     <string name="cd_back">返回</string>
     <string name="cd_restart">重启</string>

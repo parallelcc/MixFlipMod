@@ -69,6 +69,15 @@ sealed class PrefSpec {
         @param:StringRes override val titleRes: Int,
         @param:StringRes override val summaryRes: Int? = null,
     ) : PrefSpec()
+
+    data class ListSelect(
+        override val prefKey: String,
+        @param:StringRes override val titleRes: Int,
+        @param:StringRes override val summaryRes: Int? = null,
+        val entries: List<Int>,       // StringRes IDs for display labels
+        val entryValues: List<Int>,   // corresponding values
+        val defaultValue: Int = -1,
+    ) : PrefSpec()
 }
 
 private fun hideOuterConfig(packageName: String) = AppConfig(
@@ -125,6 +134,22 @@ private val flipHomeConfig = AppConfig(
     packageName = "com.miui.fliphome",
     prefs = listOf(
         PrefSpec.Switch(Prefs.FLIPHOME_NO_START_PAGE, R.string.pref_fliphome_no_start_page, R.string.pref_fliphome_no_start_page_summary),
+        PrefSpec.ListSelect(
+            prefKey = Prefs.FLIPHOME_RECENTS_STYLE,
+            titleRes = R.string.pref_fliphome_recents_style,
+            summaryRes = R.string.pref_fliphome_recents_style_summary,
+            entries = listOf(
+                R.string.recents_style_follow_system,
+                R.string.recents_style_horizontal,
+                R.string.recents_style_vertical,
+            ),
+            entryValues = listOf(
+                Prefs.RECENTS_STYLE_DEFAULT,
+                Prefs.RECENTS_STYLE_HORIZONTAL,
+                Prefs.RECENTS_STYLE_VERTICAL,
+            ),
+            defaultValue = Prefs.RECENTS_STYLE_DEFAULT,
+        ),
     ),
 )
 
